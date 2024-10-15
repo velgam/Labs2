@@ -5,18 +5,24 @@ app = Flask(__name__)
 @app.errorhandler(404)
 def not_found(err):
        return "нет такой страницы", 404
-@app.route ("/")
-@app.route ("/web")
-def start():
+@app.route('/')
+@app.route('/index')
+def index():
+    style = url_for("static", filename = "lab1.css")
     return '''<!doctype html>
         <html>
+        <head>
+            <link rel = "stylesheet" href="''' + style +'''"
+            <title>НГТУ, ФБ, Лабораторные работы</title>
+        </head>
+           <header>
+                НГТУ, ФБ, WEB-программирование, часть 2. Список лабораторных
+           </header>
            <body>
-                <h1>web-сервер на flask</h1>
+                <a href='/lab1'>Первая лабораторная</a>
            </body>
-        </html>''', 200, {
-            'X-Server,': 'sample',
-            'Content-type': 'text/plain; charset=utf-8'
-                          }
+           <footer>Токарский Илья Андреевич, ФБИ-22, 3 курс, 2024</footer>
+        </html>''', 200
 
 @app.route("/lab1/author")
 def author():

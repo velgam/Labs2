@@ -51,16 +51,21 @@ def oak():
 
 count = 0
 
-@app.route("/lab1/counter")
+@app.route('/counter')
 def counter():
     global count
     count += 1
-    return '''<!doctype.html> 
-        <html> 
-               <body> 
-                      Сколько раз вы сюда заходили: ''' + str(count) + '''
-               </body> 
-        </html>'''
+    reset_link = url_for('cancel_counter')
+    return '''
+<!doctype html>
+<html>
+    <body>
+        Сколько раз вы сюда заходили: ''' + str(count) + '''
+        <br>
+        <a href="''' + reset_link + '''">Очистить счётчик</a>
+    </body>
+</html>
+'''
 
 @app.route('/info')
 def info():
@@ -77,3 +82,9 @@ def created():
     </body>
 </html>
 ''', 201
+
+@app.route('/cancel_counter')
+def reset_counter():
+    global count
+    count = 0
+    return redirect(url_for('counter'))

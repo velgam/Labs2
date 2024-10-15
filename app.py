@@ -34,17 +34,20 @@ def author():
                </body> 
         </html>"""
 
-@app.route("/lab1/oak")
+@app.route('/lab1/oak')
 def oak():
-    path = url_for("static", filename="oak.jpg")
-    return '''<!doctype.html> 
-        <html> 
-               <body> 
-                      <h1>Дубок</h1> 
-                      <img src="''' + path + '''">
-
-               </body> 
-        </html>'''
+    path = url_for("static", filename = "oak.jpg")
+    style = url_for("static", filename = "lab1.css")
+    return '''
+<!doctype html>
+<html>
+    <link rel = "stylesheet" href="''' + style +'''"
+    <body>
+        <h1>ну дуб хихи</h1>
+        <img src="''' + path + '''" class="oak-image">
+    </body>
+</html>
+'''
 
 count = 0
 

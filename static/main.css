@@ -1,0 +1,20 @@
+.link-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.link-list li {
+    margin-bottom: 10px;
+}
+
+.custom-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.custom-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}

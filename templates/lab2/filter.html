@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{# номер лаб работы #}
+
+{% block lab %} Лабораторная работа 2 {% endblock %}
+
+{#Осн контент:#}
+{% block main %}
+    <div>Фраза: {{ phrase }} </div>
+    <!-- Всё с заглавной -->
+    <div>Фраза: {{ phrase | title  }}</div>
+    <!-- Удаление всех тегов из фразы -->
+    <div>Фраза: {{ phrase | striptags  }}</div>  
+    <!-- Разрешение использовать теги html-->
+    <div>Фраза: {{ phrase | safe  }}</div>
+    <!-- Разрешение использовать теги html-->
+    <div>Фраза: {{ phrase | striptags | replace('сколько', 'много') | replace('нам', 'тут') | upper}}</div>
+    <div>Фраза: {{ phrase | striptags | reverse }} </div>
+{% endblock %}
+
+

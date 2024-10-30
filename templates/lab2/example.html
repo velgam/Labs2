@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 2{% endblock %}
+
+{% block main %}
+    5 + 2 = {{5+2}}<br>
+    11 * 28 = {{11*28}}<br>
+    3258 - 759 = {{3258 - 759}}<br>
+    8452 / 793 = {{ 8452 / 793}}<br>
+    8452 // 793 = {{ 8452 // 793}}<br>
+    3258 - 759 = {{3258 - 759}}<br>
+    45<sup>8</sup> = {{45 ** 8}}<br>
+
+    <ul>
+        {% for f in fruits %}
+        <li> {{loop.index}} - {{f.name}} : {{f.price}} ₽ </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

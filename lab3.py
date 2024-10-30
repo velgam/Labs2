@@ -167,5 +167,3 @@ def clear_cookies():
     resp.delete_cookie('bordercolor')
     resp.delete_cookie('borderwidth')
     return resp
-
-

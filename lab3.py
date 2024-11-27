@@ -7,12 +7,12 @@ def lab3_main():
     name = request.cookies.get('name')
     age = 24
     links = [
-        {"url": "/lab3/cookie", "text": "Куки"},
+        {"url": "/lab3/cookie", "text": "cookies"},
         {"url": "/lab3/del_cookie", "text": "delete_cookies"},
         {"url": "/lab3/form1", "text": "form1"},
-        {"url": "/lab3/order", "text": "Бар"},
-        {"url": "/lab3/settings", "text": "Настройки"},
-        {"url": "/lab3/ticketform", "text": "Дорога"},
+        {"url": "/lab3/order", "text": "кофе чай"},
+        {"url": "/lab3/settings", "text": "Настройки хмм"},
+        {"url": "/lab3/ticketform", "text": "билеты ржд контора"},
     ]
     return render_template('/lab3/lab3.html', links=links, name=name, name_color=name_color, age=age)
 
@@ -84,7 +84,7 @@ def settings():
     bgcolor = request.args.get('bgcolor')
     fsize = request.args.get('fsize')
     bordercolor = request.args.get('bordercolor')
-    borderwidth = request.args.get('borderwidth')
+    borderwidth = request.args.get('borderwi   dth')
 
     if color:
         resp = make_response(redirect('/lab3/settings/'))

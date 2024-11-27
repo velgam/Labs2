@@ -72,7 +72,7 @@ def example():
         {'name': 'манго', 'price' : 321}
         ]
     
-    return render_template('example.html', name=name, group=group, year=year, course=course, lab_num=lab_num, fruits=fruits)
+    return render_template('lab2/example.html', name=name, group=group, year=year, course=course, lab_num=lab_num, fruits=fruits)
 
 
 @lab2.route('/lab2/')
@@ -92,13 +92,13 @@ def lab2_main():
         {"url": "/lab2/calc/1", "text": "Перенаправление"},
     ]
 
-    return render_template('lab2.html', links=links, style=style)
+    return render_template('lab2/lab2.html', links=links, style=style)
 
 
 @lab2.route('/lab2/filters')
 def filters():
     phrase = 'как <b>же</b> <u>круто</u> <i>быть</i> рокстар..'
-    return render_template('filter.html', phrase=phrase)
+    return render_template('lab2/filter.html', phrase=phrase)
 
 
 @lab2.route('/lab2/add_flower/')

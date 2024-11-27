@@ -11,7 +11,7 @@ app.register_blueprint(lab2)
 app.register_blueprint(lab3)
 app.register_blueprint(lab4)
 
-
+app.secret_key = ')))'
 @app.errorhandler(404)
 def not_found(err):
     path = url_for("static", filename = "404.jpg")
@@ -45,6 +45,7 @@ def index():
                 <a href='/lab1'>Первая лабораторная</a>
                 <a href='/lab2'>Вторая лабораторная</a>
                 <a href='/lab3'>Третья лабораторная</a>
+                <a href='/lab4'>Четвертая лабораторная</a>
                     
            </body>
            <footer>Токарский Илья Андреевич, ФБИ-22, 3 курс, 2024</footer>

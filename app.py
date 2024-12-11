@@ -3,13 +3,14 @@ from lab1 import lab1
 from lab2 import lab2
 from lab3 import lab3
 from lab4 import lab4
-
+from lab5 import lab5
 
 app = Flask(__name__)
 app.register_blueprint(lab1)
 app.register_blueprint(lab2)
 app.register_blueprint(lab3)
 app.register_blueprint(lab4)
+app.register_blueprint(lab5)
 
 app.secret_key = ')))'
 @app.errorhandler(404)
@@ -46,7 +47,8 @@ def index():
                 <a href='/lab2'>Вторая лабораторная</a>
                 <a href='/lab3'>Третья лабораторная</a>
                 <a href='/lab4'>Четвертая лабораторная</a>
-                    
+                <a href='/lab5'>Пятая лабораторная</a>
+                       
            </body>
            <footer>Токарский Илья Андреевич, ФБИ-22, 3 курс, 2024</footer>
         </html>''', 200

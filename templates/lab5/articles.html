@@ -61,3 +61,7 @@
         {% endfor %}
     {% endif %}
 {% endblock %}
+
+<form action="/lab5/delete/{{ article['id'] }}" method="POST" style="display:inline;">
+    <button type="submit">Удалить</button>
+</form>

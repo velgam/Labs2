@@ -177,3 +177,19 @@ def toggle_public(article_id):
     cur.execute("UPDATE articles SET is_public=%s WHERE id=%s;", (new_is_public, article_id))
     db_close(conn, cur)
     return redirect('/lab5/list')
+
+@lab5.route('/lab5/delete/<int:article_id>', methods=['POST'])
+def delete_article(article_id):
+    login = session.get('login')
+    if not login:
+        return redirect('/lab5/login')
+
+    conn, cur = db_connect()
+    cur.execute("SELECT * FROM articles WHERE id=%s;", (article_id,))
+    article = cur.fetchone()
+
+    # Удаляем статью
+    cur.execute("DELETE FROM articles WHERE id=%s;", (article_id,))
+    db_close(conn, cur)
+
+    return redirect('/lab5/list')

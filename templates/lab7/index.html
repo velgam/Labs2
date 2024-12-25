@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа 7</title>
+    <style>
+        .film-item {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .film-item h3 {
+            margin: 0;
+        }
+        .film-item p {
+            margin: 5px 0;
+        }
+        .film-item button {
+            margin-right: 10px;
+        }
+        .form-container {
+            margin-top: 20px;
+        }
+        .form-container input,
+        .form-container textarea {
+            display: block;
+            margin-bottom: 10px;
+            width: 100%;
+            max-width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Лабораторная работа 7</h1>
+    <h2>Список фильмов</h2>
+    <div id="films-list">
+        <!-- Фильмы будут загружены сюда -->
+    </div>
+
+    <div class="form-container">
+        <h2>Добавить новый фильм</h2>
+        <form id="add-film-form">
+            <input type="text" name="title" placeholder="Название на оригинальном языке" required>
+            <input type="text" name="title_ru" placeholder="Название на русском" required>
+            <input type="number" name="year" placeholder="Год выпуска" required>
+            <textarea name="description" placeholder="Описание" required></textarea>
+            <button type="submit">Добавить фильм</button>
+        </form>
+    </div>
+
+    <script>
+        let films = []; // Глобальная переменная для хранения фильмов
+
+        // Загрузка списка фильмов
+        function loadFilms() {
+            fetch('/lab7/rest-api/films/')
+                .then(response => response.json())
+                .then(data => {
+                    films = data; // Сохраняем фильмы в глобальную переменную
+                    const filmsList = document.getElementById('films-list');
+                    filmsList.innerHTML = ''; // Очистка списка
+                    data.forEach((film, index) => {
+                        const filmItem = document.createElement('div');
+                        filmItem.className = 'film-item';
+                        filmItem.innerHTML = `
+                            <h3>${film.title_ru} (${film.year})</h3>
+                            <p>${film.description}</p>
+                            <button onclick="deleteFilm(${index})">Удалить</button>
+                            <button onclick="editFilm(${index})">Редактировать</button>
+                        `;
+                        filmsList.appendChild(filmItem);
+                    });
+                })
+                .catch(error => console.error('Ошибка:', error));
+        }
+
+        // Добавление нового фильма
+        document.getElementById('add-film-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const newFilm = {
+                title: formData.get('title'),
+                title_ru: formData.get('title_ru'),
+                year: parseInt(formData.get('year')),
+                description: formData.get('description')
+            };
+
+            fetch('/lab7/rest-api/films/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newFilm)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.id !== undefined) {
+                        alert('Фильм успешно добавлен!');
+                        loadFilms(); // Обновляем список фильмов
+                        event.target.reset(); // Очищаем форму
+                    } else {
+                        alert('Ошибка при добавлении фильма: ' + JSON.stringify(data));
+                    }
+                })
+                .catch(error => console.error('Ошибка:', error));
+        });
+
+        // Удаление фильма
+        function deleteFilm(id) {
+            if (confirm('Вы уверены, что хотите удалить этот фильм?')) {
+                fetch(`/lab7/rest-api/films/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        if (response.status === 204) {
+                            alert('Фильм успешно удален!');
+                            loadFilms(); // Обновляем список фильмов
+                        } else {
+                            alert('Ошибка при удалении фильма');
+                        }
+                    })
+                    .catch(error => console.error('Ошибка:', error));
+            }
+        }
+
+        // Редактирование фильма
+        function editFilm(id) {
+            console.log('Edit film called with id:', id); // Отладочный вывод
+            const film = films[id];
+            if (!film) {
+                alert('Фильм не найден');
+                return;
+            }
+
+            const newTitle = prompt('Введите новое название на оригинальном языке:', film.title);
+            const newTitleRu = prompt('Введите новое название на русском:', film.title_ru);
+            const newYear = prompt('Введите новый год выпуска:', film.year);
+            const newDescription = prompt('Введите новое описание:', film.description);
+
+            if (newTitle && newTitleRu && newYear && newDescription) {
+                const updatedFilm = {
+                    title: newTitle,
+                    title_ru: newTitleRu,
+                    year: parseInt(newYear),
+                    description: newDescription
+                };
+
+                fetch(`/lab7/rest-api/films/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(updatedFilm)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.title) {
+                            alert('Фильм успешно обновлен!');
+                            loadFilms(); // Обновляем список фильмов
+                        } else {
+                            alert('Ошибка при обновлении фильма: ' + JSON.stringify(data));
+                        }
+                    })
+                    .catch(error => console.error('Ошибка:', error));
+            } else {
+                alert('Все поля должны быть заполнены!');
+            }
+        }
+
+        // Загружаем фильмы при загрузке страницы
+        loadFilms();
+    </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа 6</title>
+</head>
+<body>
+    <h1>Лабораторная работа 6</h1>
+    {% if login %}
+        <p>Вы вошли как: {{ login }}</p>
+        <a href="/lab6/logout">Выйти</a>
+    {% else %}
+        <a href="/lab6/login">Войти</a>
+        <a href="/lab6/register">Зарегистрироваться</a>
+    {% endif %}
+
+    <h2>Список офисов</h2>
+    <ul>
+        {% for office in offices %}
+            <li>
+                Офис №{{ office.number }}: 
+                {% if office.tenant %}
+                    Забронирован пользователем {{ office.tenant }}
+                    {% if office.tenant == login %}
+                        <form action="/lab6/json-rpc-api/" method="POST" style="display:inline;">
+                            <input type="hidden" name="jsonrpc" value="2.0">
+                            <input type="hidden" name="id" value="1">
+                            <input type="hidden" name="method" value="cancellation">
+                            <input type="hidden" name="params" value="{{ office.number }}">
+                            <button type="submit">Разбронировать</button>
+                        </form>
+                    {% endif %}
+                {% else %}
+                    Свободен
+                    <form action="/lab6/json-rpc-api/" method="POST" style="display:inline;">
+                        <input type="hidden" name="jsonrpc" value="2.0">
+                        <input type="hidden" name="id" value="1">
+                        <input type="hidden" name="method" value="booking">
+                        <input type="hidden" name="params" value="{{ office.number }}">
+                        <button type="submit">Забронировать</button>
+                    </form>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Добавьте JavaScript здесь -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const forms = document.querySelectorAll('form');
+        forms.forEach(form => {
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const formData = new FormData(form);
+                const jsonData = {
+                    jsonrpc: "2.0",
+                    id: 1,
+                    method: formData.get('method'),
+                    params: formData.get('params')
+                };
+
+                fetch('/lab6/json-rpc-api/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(jsonData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.result === 'success') {
+                        window.location.reload(); // Перезагрузить страницу после успешного действия
+                    } else {
+                        alert(data.error.message); // Показать сообщение об ошибке
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        });
+    });
+    </script>
+</body>
+</html>

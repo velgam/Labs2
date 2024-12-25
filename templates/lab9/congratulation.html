@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 9{% endblock %}
+
+{% block main %}
+<style>
+    body {
+        background: url('{{ url_for("static", filename="lab9/snow.jpg") }}') no-repeat center center fixed;
+        background-size: cover;
+        color: white;
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+    .container {
+        background: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        border-radius: 15px;
+        margin: 50px auto;
+        max-width: 600px;
+        text-align: center;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    }
+    h1 {
+        color: #ffcc00;
+        text-shadow: 2px 2px 5px rgba(255, 204, 0, 0.7);
+    }
+    p {
+        font-size: 18px;
+        line-height: 1.6;
+    }
+    img {
+        max-width: 100%;
+        border-radius: 10px;
+        margin-top: 20px;
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    }
+    a {
+        color: #ffcc00;
+        text-decoration: none;
+        font-size: 16px;
+        transition: color 0.3s ease;
+    }
+    a:hover {
+        color: #ff9900;
+    }
+</style>
+<div class="container">
+    <h1>Поздравление</h1>
+    <p>{{ greeting }}</p>
+    <p>{{ gift }}</p>
+    <img src="{{ url_for('static', filename='lab9/' + image) }}" alt="Подарок">
+    <div>
+        <a href="/lab9/restart">Заново</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 9{% endblock %}
+
+{% block main %}
+<style>
+    body {
+        background: url('{{ url_for("static", filename="lab9/snow.jpg") }}') no-repeat center center fixed;
+        background-size: cover;
+        color: white;
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+    .container {
+        background: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        border-radius: 15px;
+        margin: 50px auto;
+        max-width: 600px;
+        text-align: center;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    }
+    h1 {
+        color: #ffcc00;
+        text-shadow: 2px 2px 5px rgba(255, 204, 0, 0.7);
+    }
+    .btn {
+        background-color: #ff6600;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+    .btn:hover {
+        background-color: #ff9900;
+    }
+    label {
+        font-size: 18px;
+        margin-right: 10px;
+    }
+    input[type="radio"] {
+        margin-right: 5px;
+    }
+</style>
+<div class="container">
+    <h1>Укажите ваш пол</h1>
+    <form method="POST">
+        <label>
+            <input type="radio" name="gender" value="мужчина" required> Мужчина
+        </label>
+        <label>
+            <input type="radio" name="gender" value="женщина" required> Женщина
+        </label>
+        <button type="submit" class="btn">Далее</button>
+    </form>
+</div>
+{% endblock %}

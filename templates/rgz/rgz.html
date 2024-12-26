@@ -258,8 +258,8 @@
                             <button type="submit" class="btn btn-danger">Против</button>
                         </form>
                         {% if session.user_id == initiative.user_id or session.is_admin %}
-                        <form action="/rgz/delete/{{ initiative.id }}" method="post" class="d-inline">
-                            <button type="submit" class="btn btn-warning">Удалить</button>
+                        <form action="{{ url_for('rgz.admin_delete_user', id=user.id) }}" method="POST">
+                            <button type="submit" class="btn btn-danger">Удалить</button>
                         </form>
                         {% endif %}
                     </div>

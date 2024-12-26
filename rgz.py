@@ -378,6 +378,11 @@ def admin_delete_user(id):
 
     try:
         with conn.cursor() as cursor:
+            # Удаляем голоса, связанные с инициативами пользователя
+            cursor.execute("DELETE FROM votes WHERE user_id = %s;", (id,))
+            # Удаляем инициативы пользователя
+            cursor.execute("DELETE FROM initiatives WHERE user_id = %s;", (id,))
+            # Удаляем самого пользователя
             cursor.execute("DELETE FROM users WHERE id = %s;", (id,))
             conn.commit()
             flash('Пользователь успешно удален', 'success')

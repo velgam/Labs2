@@ -44,9 +44,9 @@ def detail():
         return redirect(url_for('lab9.congratulation'))  # Используем url_for
 
     if preference == 'вкусное':
-        options = [('сладкое', 'Сладкое'), ('сытное', 'Сытное')]
+        options = [('сладкое', 'Сладкое'), ('прикольное', 'Прикольное')]
     else:
-        options = [('цветы', 'Цветы'), ('картина', 'Картина')]
+        options = [('боты', 'Боты'), ('очки', 'Очки')]
 
     return render_template('lab9/detail.html', options=options)
 
@@ -74,7 +74,7 @@ def congratulation():
             image = 'rab.jpg'
             gift = "Вот тебе подарок — личный раб!"
     else:
-        if detail == 'цветы':
+        if detail == 'боты':
             image = 'marant.jpg'
             gift = "Вот тебе подарок — боты изабель маран!"
         else:

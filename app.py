@@ -9,44 +9,8 @@ from lab8 import lab8
 from lab7 import lab7
 from lab9 import lab9
 from rgz import rgz
-from os import path
-import os
-from flask_login import LoginManager
-from db import db
 
 app = Flask(__name__)
-
-# Инициализация LoginManager
-login_manager = LoginManager()
-login_manager.login_view = 'lab8.login'
-login_manager.init_app(app)
-
-# Настройка конфигурации приложения
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'Секретно-секретный секрет')
-app.config['DB_TYPE'] = os.getenv('DB_TYPE', 'postgres')
-
-# Настройка базы данных
-if app.config['DB_TYPE'] == 'postgres':
-    db_name = 'tok'
-    db_user = 'tok'
-    db_password = '123'
-    host_ip = '127.0.0.1'
-    host_port = 5432
-    app.config['SQLALCHEMY_DATABASE_URI'] = \
-        f'postgresql://{db_user}:{db_password}@{host_ip}:{host_port}/{db_name}'
-else:
-    dir_path = path.dirname(path.realpath(__file__))
-    db_path = path.join(dir_path, "database.db")
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
-
-db.init_app(app)
-
-from db.models import users
-
-@login_manager.user_loader
-def load_users(login_id):
-    return users.query.get(int(login_id))
-
 
 app.register_blueprint(lab1)
 app.register_blueprint(lab2)
@@ -104,7 +68,6 @@ def index():
         <footer>Токарский Илья Андреевич, ФБИ-22, 3 курс, 2024</footer>
         </html>''', 200
 
-# Другие маршруты и обработчики ошибок
 @app.route('/error/400')
 def error_400():
     return 'Bad Request', 400
@@ -179,8 +142,3 @@ def heavy_metal():
     'X-Custom-Header-1': 'bella',
     'X-Custom-Header-2': 'bella'
 }
-
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all() 
-    app.run(debug=True)

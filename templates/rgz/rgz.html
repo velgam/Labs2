@@ -20,8 +20,12 @@
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(html, 'text/html');
                     const newInitiatives = doc.querySelector('.list-group').innerHTML;
-                    listGroup.innerHTML += newInitiatives;  // Добавляем новые инициативы
-                    loadMoreButton.href = `/rgz?offset=${newOffset}`;  // Обновляем ссылку
+                    if (newInitiatives.trim() === '') {
+                        loadMoreButton.style.display = 'none';  // Скрываем кнопку, если инициатив больше нет
+                    } else {
+                        listGroup.innerHTML += newInitiatives;
+                        loadMoreButton.href = `/rgz?offset=${newOffset}`;
+                    }
                 })
                 .catch(error => console.error('Error loading more initiatives:', error));
         });
@@ -50,7 +54,7 @@
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         width: 90%;
-        max-width: 1200px; /* Увеличим максимальную ширину для двух колонок */
+        max-width: 1200px;
         margin: 20px auto;
     }
 
@@ -258,7 +262,7 @@
                             <button type="submit" class="btn btn-danger">Против</button>
                         </form>
                         {% if session.user_id == initiative.user_id or session.is_admin %}
-                        <form action="{{ url_for('rgz.admin_delete_user', id=user.id) }}" method="POST">
+                        <form action="{{ url_for('rgz.delete_initiativevb', id=initiative.id) }}" method="POST">
                             <button type="submit" class="btn btn-danger">Удалить</button>
                         </form>
                         {% endif %}
@@ -278,27 +282,31 @@
     <div class="initiatives-column">
         <h2>Мои инициативы</h2>
         <div class="list-group">
-            {% for my_initiative in my_initiatives %}
-                <div class="list-group-item">
-                    <h5>{{ my_initiative.title }}</h5>
-                    <p>{{ my_initiative.content }}</p>
-                    <small>
-                        Дата: {{ my_initiative.created_at }} |
-                        Голосов: {{ my_initiative.votes }}
-                    </small>
-                    <div class="initiative-actions">
-                        <form action="/rgz/vote/up/{{ my_initiative.id }}" method="post" class="d-inline">
-                            <button type="submit" class="btn btn-success">За</button>
-                        </form>
-                        <form action="/rgz/vote/down/{{ my_initiative.id }}" method="post" class="d-inline">
-                            <button type="submit" class="btn btn-danger">Против</button>
-                        </form>
-                        <form action="/rgz/delete/{{ my_initiative.id }}" method="post" class="d-inline">
-                            <button type="submit" class="btn btn-warning">Удалить</button>
-                        </form>
+            {% if my_initiatives %}
+                {% for my_initiative in my_initiatives %}
+                    <div class="list-group-item">
+                        <h5>{{ my_initiative.title }}</h5>
+                        <p>{{ my_initiative.content }}</p>
+                        <small>
+                            Дата: {{ my_initiative.created_at }} |
+                            Голосов: {{ my_initiative.votes }}
+                        </small>
+                        <div class="initiative-actions">
+                            <form action="/rgz/vote/up/{{ my_initiative.id }}" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-success">За</button>
+                            </form>
+                            <form action="/rgz/vote/down/{{ my_initiative.id }}" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-danger">Против</button>
+                            </form>
+                            <form action="/rgz/delete/{{ my_initiative.id }}" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-warning">Удалить</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            {% else %}
+                <p>У вас пока нет инициатив.</p>
+            {% endif %}
         </div>
     </div>
     {% endif %}

@@ -11,7 +11,6 @@ from lab9 import lab9
 from rgz import rgz
 
 app = Flask(__name__)
-
 app.register_blueprint(lab1)
 app.register_blueprint(lab2)
 app.register_blueprint(lab3)
@@ -23,31 +22,32 @@ app.register_blueprint(lab8)
 app.register_blueprint(lab9)
 app.register_blueprint(rgz)
 
-
+app.config['DB_TYPE'] = 'postgres'
+app.secret_key = ')))'
 @app.errorhandler(404)
 def not_found(err):
-    path = url_for("static", filename="404.jpg")
-    style = url_for("static", filename="lab1.css")
+    path = url_for("static", filename = "404.jpg")
+    style = url_for("static", filename = "lab1.css")
     return '''
 <!doctype html>
 <html>
 <head>
-    <link rel="stylesheet" href="''' + style + '''">
+    <link rel = "stylesheet" href="''' + style +'''"
 </head>
-<body>
-    <img src="''' + path + '''" class="full-screen-image">
-</body>
+    <body>
+        <img src="''' + path + '''" class="full-screen-image">
+    </body>
 </html>
 ''', 404
 
 @app.route('/')
 @app.route('/index')
 def index():
-    style = url_for("static", filename="lab1.css")
+    style = url_for("static", filename = "lab1.css")
     return '''<!doctype html>
         <html>
         <head>
-            <link rel="stylesheet" href="''' + style + '''">
+            <link rel = "stylesheet" href="''' + style +'''"
             <title>НГТУ, ФБ, Лабораторные работы</title>
         </head>
         <header>
@@ -67,6 +67,7 @@ def index():
         </body>
         <footer>Токарский Илья Андреевич, ФБИ-22, 3 курс, 2024</footer>
         </html>''', 200
+
 
 @app.route('/error/400')
 def error_400():
@@ -114,13 +115,13 @@ def internal_error(error):
 
 @app.route('/model')
 def heavy_metal():
-    path = url_for("static", filename="Bella.jpg")
-    style = url_for("static", filename="lab1.css")
+    path = url_for("static", filename = "Bella.jpg")
+    style = url_for("static", filename = "lab1.css")
     return '''
 <!doctype html>
 <html>
     <head>
-        <link rel="stylesheet" href="''' + style + '''">
+        <link rel = "stylesheet" href="''' + style +'''"
         <title>BELLA HADID</title>
         <style>
             body {
@@ -142,3 +143,7 @@ def heavy_metal():
     'X-Custom-Header-1': 'bella',
     'X-Custom-Header-2': 'bella'
 }
+
+
+if __name__ == '__main__':
+    app.run(debug=True)

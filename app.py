@@ -39,18 +39,15 @@ else:
     db_path = path.join(dir_path, "database.db")
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
 
-# Инициализация SQLAlchemy
 db.init_app(app)
 
-# Импорт моделей после инициализации db
 from db.models import users
 
-# Загрузчик пользователей для Flask-Login
 @login_manager.user_loader
 def load_users(login_id):
     return users.query.get(int(login_id))
 
-# Регистрация Blueprint
+
 app.register_blueprint(lab1)
 app.register_blueprint(lab2)
 app.register_blueprint(lab3)
@@ -62,7 +59,7 @@ app.register_blueprint(lab8)
 app.register_blueprint(lab9)
 app.register_blueprint(rgz)
 
-# Обработчики ошибок
+
 @app.errorhandler(404)
 def not_found(err):
     path = url_for("static", filename="404.jpg")
@@ -185,5 +182,5 @@ def heavy_metal():
 
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()  # Создание таблиц в базе данных
+        db.create_all() 
     app.run(debug=True)

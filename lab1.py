@@ -39,7 +39,7 @@ def lab():
                     <li><a href="/error/405">Ошибка 405</a></li>
                     <li><a href="/error/418">Ошибка 418</a></li>
                     <li><a href="/trigger_error">Триггер ошибки</a></li>
-                    <li><a href="/model">Белла Хадид</a></li>
+                    <li><a href="/model">UROD</a></li>
                 </ul>
         </body>
         <footer>Токарский Илья Андреевич, ФБИ-22, 3 курс, 2024</footer>
@@ -166,6 +166,6 @@ def heavy_metal():
 </html>
 ''', 200, {
     'Content-Language': 'ru',
-    'X-Custom-Header-1': 'bella',
-    'X-Custom-Header-2': 'bella'
+    'X-Custom-Header-1': 'Il',
+    'X-Custom-Header-2': 'Il'
 }

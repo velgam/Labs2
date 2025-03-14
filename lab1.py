@@ -141,14 +141,14 @@ def created():
 
 @lab1.route('/lab1/model')
 def heavy_metal():
-    path = url_for("static", filename = "Bella.jpg")
+    path = url_for("static", filename = "ILYSHA.jpg")
     style = url_for("static", filename = "lab1.css")
     return '''
 <!doctype html>
 <html>
     <head>
         <link rel = "stylesheet" href="''' + style +'''"
-        <title>BELLA HADID</title>
+        <title>GROMILA</title>
         <style>
             body {
                 background-color: black;
@@ -157,7 +157,7 @@ def heavy_metal():
         </style>
     </head>
     <body>
-        <h1>Bella</h1>
+        <h1>IL'KA</h1>
         <p>
            ОН ДЕРЖАЛ В СТРАХЕ ВЕСЬ ЛЕСОЗАВОДСК
         </p>

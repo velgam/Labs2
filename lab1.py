@@ -159,9 +159,9 @@ def heavy_metal():
     <body>
         <h1>Bella</h1>
         <p>
-           маделирую шмаделирую чиста э уа афап
+           ОН ДЕРЖАЛ В СТРАХЕ ВЕСЬ ЛЕСОЗАВОДСК
         </p>
-        <img src="''' + path + '''" alt="Bella">
+        <img src="''' + path + '''" alt="ILYSHA">
     </body>
 </html>
 ''', 200, {
